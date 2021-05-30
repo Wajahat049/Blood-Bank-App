@@ -4,7 +4,7 @@ import { View, Text, Button, TextInput,Image,ToastAndroid } from 'react-native';
 import database from "@react-native-firebase/database";
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import {connect } from "react-redux"
 
 
 function Login(props) {
@@ -28,7 +28,7 @@ function Login(props) {
   .ref('/users/')
   .once('value')
   .then(snapshot => {
-    console.log('User data: ', snapshot.val());
+    // console.log('User data: ', snapshot.val());
     check=snapshot.val()
     if (user.Name in check){
       console.log("Successfully login");
@@ -43,6 +43,32 @@ function Login(props) {
     }
   });
 
+  database()
+  .ref('/donors/')
+  .once('value')
+  .then(snapshot => {
+    // console.log('User data: ', snapshot.val());
+    const donorCheck=snapshot.val()
+    if (user.Name in donorCheck){
+      console.log("Loger and donor")
+      LogerDonor(user.Name);
+      props.changeislogerDonor(user.Name)
+    }
+    else{
+      console.log("Loger and but not donor")
+      LogerDonor("");
+      props.changeislogerDonor("")
+
+    }
+  });
+  const LogerDonor = async (logerdonor) => {
+    try {
+      const jsonValue = JSON.stringify(logerdonor)
+      await AsyncStorage.setItem('@LOGERDONOR', jsonValue)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   }
   return (
@@ -51,7 +77,7 @@ function Login(props) {
         <Text style={{ fontSize: 50, color: 'red', fontWeight: 'bold' }}>Login</Text>
       </View>
       <View style={{ borderWidth: 3, borderColor: "red", width: "80%", margin: 20 }}>
-        <TextInput value={Name} onChangeText={(e) => setName(e)} placeholder="Name" />
+        <TextInput defaultValue={"kkkvlv"}  value={Name}  onChangeText={(e) => setName(e)} placeholder="Name" />
       </View>
       <View style={{ borderWidth: 3, borderColor: "red", width: "80%", margin: 20 }}>
         <TextInput secureTextEntry={true} value={pass} onChangeText={(e) => setPass(e)} placeholder="Password" />
@@ -68,4 +94,18 @@ function Login(props) {
   );
 }
 
-export default Login;
+
+function mapStateToProps(state) {
+  return {
+      logerDonor:state.logerDonor
+  }
+}
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changeislogerDonor:(e)=>dispatch({type:"CHANGE_LOGERDONOR",logerDonor:e})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

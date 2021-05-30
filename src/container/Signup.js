@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, Text, Button, TextInput } from 'react-native';
+import { View, Text, Button, TextInput,ToastAndroid } from 'react-native';
 import database from "@react-native-firebase/database";
 import { useState } from 'react';
 import {Picker} from "@react-native-picker/picker";
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 function Signup(props) {
@@ -11,14 +12,33 @@ function Signup(props) {
   const [pass, setPass] = useState("");
   const [phone, setPhone] = useState("");
   const [blood, setBlood] = useState("");
+    const[oldemail,setoldemail]=useState("")
   const save_data=()=>{
     let user={
         Name, email , pass , phone , blood
     }
-    database().ref(`/users/${user.Name}`).update({user})
-  }
+    database().ref(`/users/${user.Name}/user`).once("value").then(snapshot=>{
+
+      setoldemail(snapshot.val().email)
+      console.log(snapshot.val())
+     
+    
+    })
+
+    if(user.email==oldemail){
+      ToastAndroid.show("This email already exist",ToastAndroid.SHORT)
+    }
+    else{
+  database().ref(`/users/${user.Name}`).update({user})
+  ToastAndroid.show("You are successfully signup",ToastAndroid.SHORT)
   props.navigation.navigate("Login")
 
+
+    }
+
+
+
+  }
     
   
   return (
@@ -37,13 +57,14 @@ function Signup(props) {
         <TextInput secureTextEntry={true} value={pass} onChangeText={(e) => setPass(e)} placeholder="Password" />
       </View>
       <View style={{borderWidth:3,borderColor:"red",width:"80%", margin:10}}>
-        <TextInput  value={phone} onChangeText={(e)=>setPhone(e)} placeholder="Phone Number"/>
+        <TextInput keyboardType={"number-pad"}  value={phone} onChangeText={(e)=>setPhone(e)} placeholder="Phone Number"/>
       </View>
       <View style={{borderWidth:3,borderColor:"red"}}>
       <Picker
         selectedValue={blood}
         style={{ height: 50, width: 150 }}
         onValueChange={(itemValue) => setBlood(itemValue)}>
+        <Picker.Item label="" value="" />
         <Picker.Item label="A+" value="A+" />
         <Picker.Item label="A-" value="A-" />
         <Picker.Item label="B+" value="B-" />

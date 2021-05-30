@@ -29,6 +29,8 @@ import Signup from "./src/container/Signup";
 import Login from "./src/container/Login"
 import Profile from "./src/container/Profile"
 import Donor from "./src/container/BecomeDonor"
+import {Provider} from "react-redux"
+import store from "./src/Store/index"
 
 
 
@@ -36,12 +38,14 @@ import Donor from "./src/container/BecomeDonor"
 
 const App = () => {
   return (
-    // <Donor/>
+    <Provider store={store}>
+    {/* // <Donor/> */}
     <AppNavigation />
-    // <SearchDonor/>
+    {/* // <SearchDonor/>
     // <Signup/>
     // <Login/>
-    // <Profile/>
+    // <Profile/> */}
+    </Provider>
 
 
       
