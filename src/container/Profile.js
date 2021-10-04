@@ -32,7 +32,7 @@ function Profile(props) {
     return (
         <View style={{ backgroundColor: 'maroon', width: "100%" }}>
             <Image source={require("../Images/profile.png")} style={{ width: "60%", height: 200, marginLeft: 60,marginBottom:100,marginTop:30 }} />
-            <View style={{backgroundColor:'maroon',marginBottom:100}}>
+            <View style={{backgroundColor:'maroon',marginBottom:100,marginTop:-30}}>
                 <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold', margin: 3, marginLeft: 15 }}>Name :   {Info.Name}</Text>
                 <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold', margin: 3, marginLeft: 15 }}>Blood Group :   {(Info.blood)}</Text>
                 <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold', margin: 3, marginLeft: 15 }}>Health Condition :   {(Info.health)}</Text>

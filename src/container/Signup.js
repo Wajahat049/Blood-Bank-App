@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, TextInput,ToastAndroid } from 'react-native';
+import { View, Text, Button, TextInput,ToastAndroid,ScrollView } from 'react-native';
 import database from "@react-native-firebase/database";
 import { useState } from 'react';
 import {Picker} from "@react-native-picker/picker";
@@ -42,8 +42,8 @@ function Signup(props) {
     
   
   return (
-
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+<ScrollView>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',marginTop:50}}>
       <View>
         <Text style={{ fontSize: 50, color: 'red', fontWeight: 'bold',marginBottom:10 }}>SignUp</Text>
       </View>
@@ -82,6 +82,7 @@ function Signup(props) {
     </View>
     
     </View>
+    </ScrollView>
   );
 }
 

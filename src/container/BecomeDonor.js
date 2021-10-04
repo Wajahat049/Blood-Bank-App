@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, TextInput } from 'react-native';
+import { View, Text, Button, TextInput,ScrollView } from 'react-native';
 import database from "@react-native-firebase/database";
 import { useState,useEffect } from 'react';
 import {Picker} from "@react-native-picker/picker";
@@ -45,10 +45,10 @@ console.log(props.logerDonor)
 // console.log("xkbsxb",props.logerDonor)
   
   return (
-
+<ScrollView>
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <View>
-        <Text style={{ fontSize: 50, color: 'red', fontWeight: 'bold',marginBottom:10,textAlign:"center" }}>Become Donor</Text>
+        <Text style={{ fontSize: 50, color: 'red', fontWeight: 'bold',marginBottom:10,textAlign:"center",marginTop:50 }}>Become Donor</Text>
         <Text style={{ fontSize: 20, color: 'red',marginBottom:10,textAlign:"center" }}> {(props.logerDonor!="")?"You are already a donor. Your donor information will be updated":""}</Text>
       </View>
       <View style={{ borderWidth: 3, borderColor: "red", width: "80%", margin: 5 }}>
@@ -92,6 +92,7 @@ console.log(props.logerDonor)
     </View>
     
     </View>
+    </ScrollView>
   );
 }
 
